@@ -1,17 +1,26 @@
 // File: /src/core/navigation/Navigation.tsx
-import { createDrawerNavigator, DrawerContentScrollView, DrawerContentComponentProps, DrawerItem } from '@react-navigation/drawer'
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+  DrawerContentScrollView,
+  DrawerItem
+} from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
-import { View } from 'react-native';
+import { View } from 'react-native'
 
-import { Home } from './home/Home'
-import { ChatsScreen } from '../../modules/chats/screens/ChatsScreen'
 import { Settings } from './home/Settings'
+import { Home } from './home/Home'
+import ChatsScreen from '../../modules/chats/screens/ChatsScreen'
+
 
 const Drawer = createDrawerNavigator()
 
-function CustomDrawerContent(props : DrawerContentComponentProps) {
+function CustomDrawerContent(props: DrawerContentComponentProps) {
   return (
-    <DrawerContentScrollView {...props} contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={{ flex: 1, justifyContent: 'space-between' }}
+    >
       <View>
         <DrawerItem
           label="Home"
@@ -32,16 +41,21 @@ function CustomDrawerContent(props : DrawerContentComponentProps) {
         />
         <DrawerItem
           label="Log Out"
-          onPress={() => {/* Add your log out function here */}}
+          onPress={() => {
+            /* Add your log out function here */
+          }}
         />
       </View>
     </DrawerContentScrollView>
-  );
+  )
 }
 
 function DrawerGroup() {
   return (
-    <Drawer.Navigator initialRouteName="Home"  drawerContent={props => <CustomDrawerContent {...props} />}>
+    <Drawer.Navigator
+      initialRouteName="Home"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Chat" component={ChatsScreen} />
       <Drawer.Screen name="Settings" component={Settings} />

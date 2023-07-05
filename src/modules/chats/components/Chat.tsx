@@ -1,10 +1,13 @@
 // File: /src/modules/chats/components/Chat.tsx
-import React from 'react';
-import { View, Text } from 'react-native';
-import { ChatDto } from '../types'; // import the ChatDto interface
+import React from 'react'
+import { Text, View } from 'react-native'
+
+import { ChatDto } from '../types'
+
+// import the ChatDto interface
 
 interface ChatProps {
-  chat: ChatDto; // add the chat prop
+  chat: ChatDto // add the chat prop
 }
 
 export const Chat: React.FC<ChatProps> = ({ chat }) => {
@@ -12,7 +15,7 @@ export const Chat: React.FC<ChatProps> = ({ chat }) => {
     <View>
       <Text>{chat.title}</Text>
     </View>
-  );
-};
+  )
+}
 
-export default Chat;
+export default Chat
