@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
 export default function App(): ReactElement {
   return (
     <SafeAreaProvider>
-      <Navigation />
-      {/* <SafeAreaView style={styles.container}>{<Navigation />}</SafeAreaView> */}
+      <SafeAreaView style={styles.container}>{<Navigation />}</SafeAreaView>
     </SafeAreaProvider>
   )
 }
