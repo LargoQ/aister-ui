@@ -1,10 +1,13 @@
-//File: /src/App/tsx
+// File: /src/App.tsx
+
+import React from 'react';
 import { ReactElement } from 'react'
 import { StyleSheet } from 'react-native'
 import 'react-native-gesture-handler'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 import { Navigation } from './core/navigation/Navigation'
+import { AuthProvider } from './core/auth'
 
 const styles = StyleSheet.create({
   container: {
@@ -24,7 +27,11 @@ const styles = StyleSheet.create({
 export default function App(): ReactElement {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>{<Navigation />}</SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <AuthProvider>
+          <Navigation />
+        </AuthProvider>
+      </SafeAreaView>
     </SafeAreaProvider>
   )
 }

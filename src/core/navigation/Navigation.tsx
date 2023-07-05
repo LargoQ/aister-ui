@@ -1,4 +1,6 @@
 // File: /src/core/navigation/Navigation.tsx
+
+import React from 'react';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
