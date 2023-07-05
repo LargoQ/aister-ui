@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { View } from 'react-native';
 
 import { Home } from './home/Home'
-import { Test } from './home/Test'
+import { ChatsScreen } from '../../modules/chats/screens/ChatsScreen'
 import { Settings } from './home/Settings'
 
 const Drawer = createDrawerNavigator()
@@ -19,9 +19,9 @@ function CustomDrawerContent(props : DrawerContentComponentProps) {
           onPress={() => props.navigation.navigate('Home')}
         />
         <DrawerItem
-          label="Test"
+          label="Chat"
           focused={props.state.index === 1}
-          onPress={() => props.navigation.navigate('Test')}
+          onPress={() => props.navigation.navigate('Chat')}
         />
       </View>
       <View>
@@ -43,7 +43,7 @@ function DrawerGroup() {
   return (
     <Drawer.Navigator initialRouteName="Home"  drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Test" component={Test} />
+      <Drawer.Screen name="Chat" component={ChatsScreen} />
       <Drawer.Screen name="Settings" component={Settings} />
     </Drawer.Navigator>
   )
