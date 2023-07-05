@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^18.0.1",
+    "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/native": "^6.1.7",
     "@types/react": "~18.0.27",
     "expo": "~48.0.15",
@@ -49,9 +50,13 @@
     "react": "18.2.0",
     "react-dom": "^18.2.0",
     "react-native": "0.71.8",
+    "react-native-drawer": "^2.5.1",
+    "react-native-gesture-handler": "~2.9.0",
+    "react-native-reanimated": "~2.14.4",
     "react-native-safe-area-context": "4.5.0",
     "react-native-screens": "~3.20.0",
     "react-native-web": "~0.18.10",
+    "react-navigation-drawer": "react-navigation/drawer",
     "typescript": "^4.9.4"
   },
   "devDependencies": {
@@ -66,6 +71,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
     "babel-plugin-module-resolver": "^5.0.0",
+    "babel-preset-expo": "^9.3.2",
     "eslint": "^8.39.0",
     "eslint-config-universe": "^11.2.0",
     "eslint-import-resolver-typescript": "^3.5.5",
@@ -75,6 +81,7 @@
     "eslint-plugin-testing-library": "^5.10.3",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
+    "module-resolver": "^1.0.0",
     "prettier": "^2.8.8",
     "standard-version": "^9.5.0"
   },
