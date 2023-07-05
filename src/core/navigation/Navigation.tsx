@@ -1,17 +1,50 @@
 // File: /src/core/navigation/Navigation.tsx
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import { createDrawerNavigator, DrawerContentScrollView, DrawerContentComponentProps, DrawerItem } from '@react-navigation/drawer'
 import { NavigationContainer } from '@react-navigation/native'
+import { View } from 'react-native';
 
 import { Home } from './home/Home'
 import { Test } from './home/Test'
+import { Settings } from './home/Settings'
 
 const Drawer = createDrawerNavigator()
 
+function CustomDrawerContent(props : DrawerContentComponentProps) {
+  return (
+    <DrawerContentScrollView {...props} contentContainerStyle={{flex: 1, justifyContent: 'space-between'}}>
+      <View>
+        <DrawerItem
+          label="Home"
+          focused={props.state.index === 0}
+          onPress={() => props.navigation.navigate('Home')}
+        />
+        <DrawerItem
+          label="Test"
+          focused={props.state.index === 1}
+          onPress={() => props.navigation.navigate('Test')}
+        />
+      </View>
+      <View>
+        <DrawerItem
+          label="Settings"
+          focused={props.state.index === 2}
+          onPress={() => props.navigation.navigate('Settings')}
+        />
+        <DrawerItem
+          label="Log Out"
+          onPress={() => {/* Add your log out function here */}}
+        />
+      </View>
+    </DrawerContentScrollView>
+  );
+}
+
 function DrawerGroup() {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator initialRouteName="Home"  drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Home" component={Home} />
       <Drawer.Screen name="Test" component={Test} />
+      <Drawer.Screen name="Settings" component={Settings} />
     </Drawer.Navigator>
   )
 }
