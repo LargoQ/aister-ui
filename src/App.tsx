@@ -10,8 +10,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start' // align items to the start of the main axis (horizontal axis)
   },
   text: {
     marginBottom: 8
