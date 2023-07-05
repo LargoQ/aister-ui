@@ -1,10 +1,10 @@
 import React from 'react'
 import { Text, View } from 'react-native'
 
-export const Settings: React.FC = () => {
+export const Dataset: React.FC = () => {
   return (
     <View>
-      <Text>This is the Settings Screen</Text>
+      <Text>This is the Dataset Screen</Text>
     </View>
   )
 }
