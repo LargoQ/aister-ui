@@ -1,4 +1,5 @@
-import React from 'react'
+//File: /src/core/navigation/home/Home.tsx
+
 import { Text, View } from 'react-native'
 
 export const Home: React.FC = () => {
