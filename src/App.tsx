@@ -1,13 +1,12 @@
-// File: /src/App.tsx
+//File: /src/App.tsx
 
-import React from 'react';
-import { ReactElement } from 'react'
-import { StyleSheet } from 'react-native'
+import { ReactElement, useEffect } from 'react'
+import { StyleSheet, Linking } from 'react-native'
 import 'react-native-gesture-handler'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
-import { Navigation } from './core/navigation/Navigation'
-import { AuthProvider } from './core/auth'
+import Navigation from './core/navigation/Navigation'
+import { AuthProvider, useAuth } from './core/auth/AuthProvider'
 
 const styles = StyleSheet.create({
   container: {
@@ -24,14 +23,49 @@ const styles = StyleSheet.create({
   }
 })
 
+const AppContent: React.FC = () => {
+  const { handleAccessToken } = useAuth();
+
+  useEffect(() => {
+    const handleOpenURL = (event: { url: string }) => {
+      const { url } = event;
+      const [, query] = url.split('?');
+      const params = new URLSearchParams(query);
+      const accessToken = params.get('access_token');
+      if (accessToken) {
+        handleAccessToken(accessToken);
+      }
+    };
+  
+    // Add the event listener
+    const handlePopState = (event: PopStateEvent) => {
+      handleOpenURL({ url: window.location.href });
+    };
+    window.addEventListener('popstate', handlePopState);
+  
+    // Get initial URL
+    handleOpenURL({ url: window.location.href });
+  
+    // Return a cleanup function that removes the event listener
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [handleAccessToken]);
+  
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Navigation />
+    </SafeAreaView>
+  );
+}
+
 export default function App(): ReactElement {
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
-        <AuthProvider>
-          <Navigation />
-        </AuthProvider>
-      </SafeAreaView>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </SafeAreaProvider>
   )
 }

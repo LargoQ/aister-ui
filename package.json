@@ -42,6 +42,8 @@
     "@expo/webpack-config": "^18.0.1",
     "@react-navigation/drawer": "^6.6.3",
     "@react-navigation/native": "^6.1.7",
+    "@react-navigation/stack": "^6.3.17",
+    "@types/aria-query": "^5.0.1",
     "@types/react": "~18.0.27",
     "axios": "^1.4.0",
     "expo": "~48.0.15",
@@ -59,7 +61,8 @@
     "react-native-screens": "~3.20.0",
     "react-native-web": "~0.18.10",
     "react-navigation-drawer": "react-navigation/drawer",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "url": "^0.11.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

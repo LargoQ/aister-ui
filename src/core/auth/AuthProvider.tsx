@@ -1,11 +1,13 @@
-// File: /src/core/auth.ts
-import React, { createContext, useContext, useState, ReactNode, ReactElement } from 'react';
+// File: /src/core/AuthProvider.tsx
+
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Linking } from 'react-native';
 
 interface AuthContextType {
   isLoggedIn: boolean;
   setLoggedIn: (value: boolean) => void;
   checkAuthorization: () => void;
+  handleAccessToken: (accessToken: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -14,19 +16,25 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }): ReactElement => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isLoggedIn, setLoggedIn] = useState(false);
+
+  const handleAccessToken = (accessToken: string) => {
+    console.log('Received access token:', accessToken);
+    setLoggedIn(true);
+  };
 
   const checkAuthorization = () => {
     if (!isLoggedIn) {
-      // Replace this with your actual backend login URL
-      const backendLoginUrl = 'http://localhost:8000/v1.0/api/login';
+      const backendLoginUrl = 'http://localhost:8000/auth/azure/login';
       Linking.openURL(backendLoginUrl);
+    } else {
+      console.log('User is already logged in');
     }
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn, checkAuthorization }}>
+    <AuthContext.Provider value={{ isLoggedIn, setLoggedIn, checkAuthorization, handleAccessToken }}>
       {children}
     </AuthContext.Provider>
   );
