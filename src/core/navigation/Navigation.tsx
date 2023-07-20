@@ -1,6 +1,5 @@
 // File: /src/core/navigation/Navigation.tsx
 
-import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
@@ -14,15 +13,12 @@ import { View } from 'react-native'
 import { Settings } from './home/Settings'
 import { Home } from './home/Home'
 import ChatsScreen from '../../modules/chats/screens/ChatsScreen'
-import { useAuth } from '../auth/AuthProvider'
-import LoginScreen from '../auth/LoginScreen'
+import LoginScreen from '../auth/LoginScreen';
 
-const Drawer = createDrawerNavigator();
+const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator();
 
 function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const { checkAuthorization } = useAuth();
-
   return (
     <DrawerContentScrollView
       {...props}
@@ -47,8 +43,10 @@ function CustomDrawerContent(props: DrawerContentComponentProps) {
           onPress={() => props.navigation.navigate('Settings')}
         />
         <DrawerItem
-         label="Log Out"
-          onPress={checkAuthorization}
+          label="Log Out"
+          onPress={() => {
+            /* Add your log out function here */
+          }}
         />
       </View>
     </DrawerContentScrollView>
@@ -68,22 +66,15 @@ function DrawerGroup() {
   )
 }
 
-function AuthStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Login" component={LoginScreen} />
-    </Stack.Navigator>
-  )
-}
-
 export const Navigation: React.FC = () => {
-  const { isLoggedIn } = useAuth();
-
   return (
     <NavigationContainer>
-      {isLoggedIn ? <DrawerGroup /> : <AuthStack />}
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Main" component={DrawerGroup} options={{ headerShown: false }} />
+      </Stack.Navigator>
     </NavigationContainer>
-  )
+  );
 }
 
-export default Navigation
+export default Navigation;

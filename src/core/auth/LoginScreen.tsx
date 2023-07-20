@@ -1,8 +1,15 @@
-// File: /src/core/auth/LoginScreen.tsx
-
 import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { makeRedirectUri, useAuthRequest, useAutoDiscovery } from 'expo-auth-session';
 import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
-import { useAuth } from './AuthProvider';
+
+type RootStackParamList = {
+  Login: undefined;
+  Main: undefined;
+};
+
+type NavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 const styles = StyleSheet.create({
   container: {
@@ -33,24 +40,31 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginScreen: React.FC = () => {
+export default function LoginScreen() {
+  const navigation = useNavigation<NavigationProp>();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { checkAuthorization } = useAuth();
 
-  const handleLogin = () => {
-    // Handle the login with username and password here
-  };
+  // Endpoint
+  const discovery = useAutoDiscovery('https://login.microsoftonline.com/70514cbd-d710-4b5a-870c-53d63417ad68/v2.0');
+  
+  // Request
+  const [request, response, promptAsync] = useAuthRequest(
+    {
+      clientId: '053a7c24-9c21-424f-8c7a-9473157872c9',
+      scopes: ['openid', 'profile', 'email', 'offline_access'],
+      redirectUri: makeRedirectUri({
+        scheme: 'test1'
+      }),
+    },
+    discovery
+  );
 
-  const handleAzureADLogin = () => {
-    // Handle the Azure AD login here
-    checkAuthorization();
-  };
-
-  const handleGoogleLogin = () => {
-    // Handle the Google login here
-    checkAuthorization();
-  };
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      navigation.navigate('Main');
+    }
+  }, [response, navigation]);
 
   return (
     <View style={styles.container}>
@@ -70,17 +84,21 @@ const LoginScreen: React.FC = () => {
           secureTextEntry
         />
         <View style={styles.buttonContainer}>
-          <Button title="Login" onPress={handleLogin} disabled />
+          <Button title="Login" onPress={() => {}} disabled />
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Login with Azure AD" onPress={handleAzureADLogin} />
+          <Button
+            disabled={!request}
+            title="Login with Azure AD"
+            onPress={() => {
+              promptAsync();
+            }}
+          />
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Login with Google" onPress={handleGoogleLogin} disabled />
+          <Button title="Login with Google" onPress={() => {}} disabled />
         </View>
       </View>
     </View>
   );
-};
-
-export default LoginScreen;
+}
